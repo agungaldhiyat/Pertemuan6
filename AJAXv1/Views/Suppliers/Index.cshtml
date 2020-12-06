@@ -89,7 +89,7 @@
                 data: { id: id }
             }).then((result) => {
                 $("#myModal").modal('show');
-
+                $("#Id").val(result.Id);
                 $("#Name").val(result.Name);
             }).catch((error) => {
                 console.log(error);
@@ -101,8 +101,11 @@
             supplier.Id = $("#Id").val();
             supplier.Name = $("#Name").val();
             console.log(supplier);
+
+            var links = (supplier.Id == "") ? "/Suppliers/Post" : "/Suppliers/Edit";
+
             $.ajax({
-                url: "/Suppliers/Post",
+                url: links,
                 data: supplier
             }).then((result) => {
                 if (result == 200) {
@@ -112,10 +115,12 @@
                         'success'
                     )
                     table.ajax.reload();
+                    $("#Id").val(null);
+                    $("#Name").val(null);
                     $("#myModal").modal('toggle');
                 }
                 else {
-                    console.log(result);
+                   console.log(result);
                 }
             }).catch((error) => {
                 console.log(error);

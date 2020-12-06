@@ -41,6 +41,24 @@ namespace AJAXv1.Controllers
             return Json(400, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult Edit(Supplier supplier)
+        {
+            var get = myContext.Suppliers.Find(supplier.Id);
+            if (get != null)
+            {
+                if(TryUpdateModel(get, "", new string[] { "Name" })){
+                    myContext.SaveChanges();
+                    return Json(200, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    return Json(400, JsonRequestBehavior.AllowGet);
+                }
+            }
+            
+            return Json(400, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult Delete(int id)
         {
             var get = myContext.Suppliers.Find(id);
